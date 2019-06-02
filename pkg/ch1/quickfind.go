@@ -1,7 +1,17 @@
 package ch1
 
 type QuickFind struct {
-	BaseUF
+	*BaseUF
+}
+
+func NewQuickFind(n int) QuickFind {
+	var qf = QuickFind { }
+	qf.count = n
+	qf.id = make([]int, n)
+	for i, _ := range qf.id {
+		qf.id[i] = i
+	}
+	return qf
 }
 
 func (qf QuickFind) Find(p int) int {
