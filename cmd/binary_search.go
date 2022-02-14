@@ -1,13 +1,22 @@
-package cmd
+package main
 
 import (
 	"fmt"
+	"github.com/efuquen/algorithms/pkg/algs4"
+	"log"
 	"os"
-
-	"github.com/efuquen/algorithms/pkg/algs4/in"
 )
 
 func main() {
-	in := in.NewIn(os.Args[0])
-	fmt.Println(in.ReadAll())
+	in, err := algs4.NewIn(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer in.Close()
+
+	nums, err := in.ReadAllInts()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(nums)
 }

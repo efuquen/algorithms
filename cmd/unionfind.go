@@ -1,15 +1,14 @@
-package cmd
+package main
 
 import (
 	"fmt"
-
-	"github.com/efuquen/algorithms/pkg/ch1/quickfind"
+	"github.com/efuquen/algorithms/pkg/ch1"
 )
 
 func main() {
 	var count int
 	fmt.Scan(&count)
-	var qf = quickfind.NewQuickFind(count)
+	var qf = ch1.NewQuickFind(count)
 
 	var p, q int
 	_, err := fmt.Scan(p, q)
