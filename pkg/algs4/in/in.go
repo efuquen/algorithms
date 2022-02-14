@@ -1,4 +1,4 @@
-package algs4
+package in
 
 import (
 	"bufio"
@@ -37,14 +37,14 @@ func (in In) ReadAllStrings() []string {
 	return strings.Fields(in.ReadAll())
 }
 
-func (in In) ReadAllInts() ([]int64, error) {
-	ints := []int64{}
+func (in In) ReadAllInts() ([]int, error) {
+	ints := []int{}
 	for _, s := range in.ReadAllStrings() {
 		num, err := strconv.ParseInt(s, 10, 64)
 		if err != nil {
 			return nil, err
 		}
-		ints = append(ints, num)
+		ints = append(ints, int(num))
 	}
 	return ints, nil
 }
