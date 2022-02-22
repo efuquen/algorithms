@@ -104,11 +104,6 @@ func (s *ResizingArrayStack[Item]) Iter() iter.Iterator[*Item] {
  *  Stack[Item] start.
  */
 
-type node[Item any] struct {
-	item *Item
-	next *node[Item]
-}
-
 type Stack[Item any] struct {
 	iter.Iterable[Item]
 
