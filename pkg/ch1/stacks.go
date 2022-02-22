@@ -2,6 +2,10 @@ package ch1
 
 import "github.com/efuquen/algorithms/pkg/algs4/iter"
 
+/*
+ *  FixedCapacityStackOfStrings start.
+ */
+
 type FixedCapacityStackOfStrings struct {
 	a []string
 	n int
@@ -32,6 +36,10 @@ func (s *FixedCapacityStackOfStrings) Pop() string {
 	item := s.a[s.n]
 	return item
 }
+
+/*
+ *  ResizingArrayStack[Item] start.
+ */
 
 type ResizingArrayStack[Item any] struct {
 	iter.Iterable[Item]
@@ -86,6 +94,65 @@ func (s *ResizingArrayStack[Item]) Iter() iter.Iterator[*Item] {
 	go func() {
 		for i := s.n - 1; i >= 0; i-- {
 			iter <- s.a[i]
+		}
+		close(iter)
+	}()
+	return iter
+}
+
+/*
+ *  Stack[Item] start.
+ */
+
+type node[Item any] struct {
+	item *Item
+	next *node[Item]
+}
+
+type Stack[Item any] struct {
+	iter.Iterable[Item]
+
+	first *node[Item]
+	n     int
+}
+
+func NewStack[Item any]() Stack[Item] {
+	return Stack[Item]{
+		first: nil,
+		n:     0,
+	}
+}
+
+func (s *Stack[Item]) IsEmpty() bool {
+	return s.first == nil
+}
+
+func (s *Stack[Item]) Size() int {
+	return s.n
+}
+
+func (s *Stack[Item]) Push(item *Item) {
+	oldFirst := s.first
+	s.first = &node[Item]{
+		item: item,
+		next: oldFirst,
+	}
+	s.n++
+}
+
+func (s *Stack[Item]) Pop() *Item {
+	item := s.first.item
+	s.first = s.first.next
+	s.n--
+
+	return item
+}
+
+func (s *Stack[Item]) Iter() iter.Iterator[*Item] {
+	iter := make(iter.Iterator[*Item])
+	go func() {
+		for n := s.first; n != nil; n = n.next {
+			iter <- n.item
 		}
 		close(iter)
 	}()
