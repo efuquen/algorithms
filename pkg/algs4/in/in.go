@@ -24,13 +24,20 @@ func NewIn(path string) (In, error) {
 }
 
 func scanAll(data []byte, atEOF bool) (advance int, token []byte, err error) {
-	return len(data), data, nil
+	err = nil
+	if atEOF {
+		err = bufio.ErrFinalToken
+	}
+	return len(data), data, err
 }
 
 func (in In) ReadAll() string {
 	in.scanner.Split(scanAll)
-	in.scanner.Scan()
-	return in.scanner.Text()
+	var sb strings.Builder
+	for in.scanner.Scan() {
+		sb.WriteString(in.scanner.Text())
+	}
+	return sb.String()
 }
 
 func (in In) ReadAllStrings() []string {
