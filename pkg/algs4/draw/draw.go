@@ -1,4 +1,4 @@
-package stddraw
+package draw
 
 import (
 	"fyne.io/fyne/v2"
@@ -114,7 +114,6 @@ func Point(x, y float32) {
 	circle.Move(fyne.NewPos(xs-scaledPenRadius/2, ys-scaledPenRadius/2))
 	circle.Resize(fyne.NewSize(scaledPenRadius, scaledPenRadius))
 	content.Add(circle)
-	w.ShowAndRun()
 }
 
 func Circle(x, y, radius float32) {
@@ -129,5 +128,20 @@ func Circle(x, y, radius float32) {
 	circle.Move(fyne.NewPos(xs-ws/2, ys-hs/2))
 	circle.Resize(fyne.NewSize(ws, hs))
 	content.Add(circle)
+}
+
+func FilledRectangle(x, y, halfWidth, halfHeight float32) {
+	xs := scaleX(x)
+	ys := scaleY(y)
+	ws := factorX(2 * halfWidth)
+	hs := factorY(2 * halfHeight)
+
+	rect := canvas.NewRectangle(penColor)
+	rect.Move(fyne.NewPos(xs-ws/2, ys-hs/2))
+	rect.Resize(fyne.NewSize(ws, hs))
+	content.Add(rect)
+}
+
+func ShowAndRun() {
 	w.ShowAndRun()
 }
